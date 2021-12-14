@@ -16,7 +16,7 @@ if (a > 100) {
     console.log('a < 100 but a >= 50');
 }
 
-(a == 50) ? console.log('ok!') : console.log('error');
+// (a == 50) ? console.log('ok!') : console.log('error');
 
 const num = 50;
 // switch проверяет стогое ( === ) сравнение, учитывая типы
