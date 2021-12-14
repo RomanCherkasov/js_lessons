@@ -23,6 +23,6 @@ for (let i = 1; i < 8; i++) {
     if (i == 7){
         break;
     }
-    console.log(`{num} {i}`);
+    console.log(`${num} ${i}`);
     num++;
 }
