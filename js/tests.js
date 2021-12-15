@@ -1,12 +1,12 @@
 'use strict';
 let x = 5; console.log(x++);
 
-const a = [];
+const a = [] + false - null + true;
 console.log(a);
 
-let y = 1;
-let zx = y = 2;
-console.log(y);
+// let y = 1;
+// let zx = y = 2;
+// console.log(y);
 
 let zs = [] + 1 + 2;
 console.log(typeof(zs));
@@ -27,5 +27,5 @@ console.log(qwe == ewq);
 console.log(+'Infinity');
 console.log('Ёжик' > 'яблоко');
 
-const last = 0 || "" || 2 || undefined || true || falsе ;
+//const last = 0 || "" || 2 || undefined || true || falsе ;
 console.log(last);
