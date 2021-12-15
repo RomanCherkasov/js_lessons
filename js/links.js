@@ -76,4 +76,4 @@ const q = {
     two: 2,
 };
 
-const newObj = {...q};
+// const newObj = {...q};
