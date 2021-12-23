@@ -91,4 +91,63 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setClock('.timer', deadline);
+
+    // modal window
+
+    const modalWindow = document.querySelector('.modal'),
+          buttonForModalWindow = document.querySelectorAll('[data-modal]'),
+          buttonClose = document.querySelector('[data-close]');
+
+    function modalWindowHide(modalWindowForHide){
+        // как в уроке
+        modalWindowForHide.classList.add('hide');
+        modalWindowForHide.classList.remove('show');
+        // как сам придумал
+        // modalWindow.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function modalWindowShow(modalWindowForShow){
+        // как в уроке
+        modalWindow.classList.add('show');
+        modalWindow.classList.remove('hide');
+        // как сам придумал
+        // modalWindow.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+    }
+
+    buttonForModalWindow.forEach((item) =>{
+        item.addEventListener('click', () =>{
+            modalWindowShow(modalWindow);
+        });
+    });
+
+    buttonClose.addEventListener('click', () => {
+        modalWindowHide(modalWindow);
+    });
+    
+
+    modalWindow.addEventListener('click', (event) => {
+        if (event.target == modalWindow) {
+            modalWindowHide(modalWindow);
+        }
+    });
+    document.addEventListener('keydown', (event) =>{
+        //  console.log(event);
+        if (event.code == 'Escape' && modalWindow.classList.contains('show')) {
+            modalWindowHide(modalWindow);
+        }
+    });
+
+    const modalTimerId = setTimeout(modalWindowShow, 3000);
+
+    function scrollListenr(){
+        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            modalWindowShow(modalWindow);
+            window.removeEventListener('scroll', scrollListenr);
+        }
+    }
+
+    window.addEventListener('scroll', scrollListenr);
 });
