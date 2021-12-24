@@ -115,6 +115,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // modalWindow.style.display = 'block';
         document.body.style.overflow = 'hidden';
         clearInterval(modalTimerId);
+        window.removeEventListener('scroll', scrollListenr);
     }
 
     buttonForModalWindow.forEach((item) =>{
@@ -143,9 +144,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const modalTimerId = setTimeout(modalWindowShow, 3000);
 
     function scrollListenr(){
-        if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+        if(window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             modalWindowShow(modalWindow);
-            window.removeEventListener('scroll', scrollListenr);
         }
     }
 
