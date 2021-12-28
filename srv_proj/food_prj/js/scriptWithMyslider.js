@@ -38,51 +38,47 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Slider
-    const sliderElems = document.querySelectorAll('.offer__slide'),
-          prev = document.querySelector('.offer__slider-prev'),
-          next = document.querySelector('.offer__slider-next'),
-          total = document.querySelector('#total'),
-          current = document.querySelector('#current');
-    let sliderIndex = 1;
-
-    showSlides(sliderIndex);
+    const sliderElem = document.querySelectorAll('.offer__slide'),
+          leftArrow = document.querySelector('.offer__slider-prev'),
+          rightArrow = document.querySelector('.offer__slider-next'),
+          totalSliderPositions = document.querySelector('#total');
+    let currentSliderPosition = document.querySelector('#current');
     
-    if (sliderElems.length < 10){
-        total.textContent = `0${sliderElems.length}`;
-    } else {
-        total.textContent = sliderElems.length;
+
+    function hideSliderElem() {
+        sliderElem.forEach(item =>{
+            item.classList.add('hide');
+        });
+    }
+    
+    function showSliderElem(i = +currentSliderPosition.textContent){
+        if (i <= 0){
+            i = +totalSliderPositions.textContent;
+            currentSliderPosition.textContent = `0${i}`;
+        }
+        if (i > sliderElem.length){
+            i = 1;
+            currentSliderPosition.textContent = `0${i}`;
+        }
+        sliderElem[i-1].classList.add('show', 'fade');
+        sliderElem[i-1].classList.remove('hide');
     }
 
-    function showSlides(n) {
-        if (n > sliderElems.length) {
-            sliderIndex = 1;
-        }
+    hideSliderElem();
+    showSliderElem();
 
-        if (n < 1) {
-            sliderIndex = sliderElems.length;
-        }
-
-        sliderElems.forEach(item => item.style.display = 'none');
-        sliderElems[sliderIndex - 1].style.display = 'block';
-
-            
-        if (sliderElems.length < 10){
-            current.textContent = `0${sliderIndex}`;
-        } else {
-            current.textContent = sliderIndex;
-        }
-    }
-
-    function plusSlides(n) {
-        showSlides(sliderIndex += n);
-    }
-
-    prev.addEventListener('click', () => {
-        plusSlides(-1);
+    leftArrow.addEventListener('click', () => {
+        const intSlPos = +currentSliderPosition.textContent; 
+        currentSliderPosition.textContent = `0${intSlPos - 1}`;
+        hideSliderElem();
+        showSliderElem(intSlPos - 1);
     });
 
-    next.addEventListener('click', () => {
-        plusSlides(1);
+    rightArrow.addEventListener('click', () => {
+        const intSlPos = +currentSliderPosition.textContent; 
+        currentSliderPosition.textContent = `0${intSlPos + 1}`;
+        hideSliderElem();
+        showSliderElem(intSlPos + 1);
     });
 
     const deadline = '2021-12-31';
