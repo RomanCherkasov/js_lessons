@@ -39,6 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Slider
     const slides = document.querySelectorAll('.offer__slide'),
+          slider = document.querySelector('.offer__slider'),
           prev = document.querySelector('.offer__slider-prev'),
           next = document.querySelector('.offer__slider-next'),
           total = document.querySelector('#total'),
@@ -66,6 +67,41 @@ window.addEventListener('DOMContentLoaded', () => {
         slide.style.width = widthWindow;
     });
 
+    slider.style.position = 'relative';
+
+    const indicators = document.createElement('ol'),
+          dots = [];
+    indicators.classList.add('carousel-indicators');
+    slider.append(indicators);
+
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('li');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        if (i == 0){
+            dot.style.opacity = 1;
+        }
+        indicators.append(dot);
+        dots.push(dot);
+    }
+
+    function dotsOpacityChanger (slideIndex) {
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity =1;
+    }
+
+    function transformSlider (offset){
+        slidesField.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function zeroChecker(slideIndex){
+        if (slides.length < 10){
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = `${slideIndex}`;
+        }
+    }
+
     next.addEventListener('click', () =>{
         if (offset == +widthWindow.slice(0, widthWindow.length - 2) * (slides.length - 1)){
             offset = 0;
@@ -73,18 +109,14 @@ window.addEventListener('DOMContentLoaded', () => {
             offset += +widthWindow.slice(0, widthWindow.length - 2);
         }
 
-        slidesField.style.transform = `translateX(-${offset}px)`;
+        transformSlider(offset);
         if (slideIndex == slides.length){
             slideIndex = 1;
         } else {
             slideIndex++;
         }
-
-        if (slides.length < 10){
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = `${slideIndex}`;
-        }
+        zeroChecker(slideIndex);
+        dotsOpacityChanger(slideIndex);
     });
 
     prev.addEventListener('click', () =>{
@@ -94,19 +126,26 @@ window.addEventListener('DOMContentLoaded', () => {
             offset -= +widthWindow.slice(0, widthWindow.length - 2);
         }
 
-        slidesField.style.transform = `translateX(-${offset}px)`;
+        transformSlider(offset);
 
         if (slideIndex == 1){
             slideIndex = slides.length;
         } else {
             slideIndex--;
         }
+        zeroChecker(slideIndex);
+        dotsOpacityChanger(slideIndex);
+    });
 
-        if (slides.length < 10){
-            current.textContent = `0${slideIndex}`;
-        } else {
-            current.textContent = `${slideIndex}`;
-        }
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) =>{
+            const slideTo = e.target.getAttribute('data-slide-to');
+            slideIndex = slideTo;
+            offset = +widthWindow.slice(0, widthWindow.length - 2) * (slideTo - 1);
+            transformSlider(offset);
+            dotsOpacityChanger(slideIndex);
+            zeroChecker(slideIndex);
+        });
     });
 
     const deadline = '2021-12-31';
@@ -277,26 +316,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
-    // getResource('http://localhost:3000/menu')
-    //     .then(data => createCard(data));
-    // function createCard(data) {
-    //     data.forEach(({img, altimg, title, descr, price}) => {
-    //         const element = document.createElement('div');
-    //         element.classList.add('menu__item');
-    //         element.innerHTML = `
-    //             <img src=${img} alt=${altimg}>
-    //             <h3 class="menu__item-subtitle">${title}</h3>
-    //             <div class="menu__item-descr">${descr}</div>
-    //             <div class="menu__item-divider"></div>
-    //             <div class="menu__item-price">
-    //                 <div class="menu__item-cost">Цена:</div>
-    //                 <div class="menu__item-total"><span>${price}</span> руб/день</div>
-    //             </div>
-    //         `;
-
-    //         document.querySelector('.menu .container').append(element);
-    //     });
-    // }
     // Forms
     const forms = document.querySelectorAll('form');
     
@@ -369,7 +388,6 @@ window.addEventListener('DOMContentLoaded', () => {
             thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
-            // modalWindowHide(thanksModal);
             modalWindowHide(modalWindow);
         }, 4000);
     }
