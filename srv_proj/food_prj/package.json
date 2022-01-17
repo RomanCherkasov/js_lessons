@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "json-server": "^0.17.0"
+  },
+  "dependencies": {
+    "package.json": "^2.0.1"
   }
 }
