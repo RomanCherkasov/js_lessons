@@ -102,11 +102,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function deleteNotDigits(str) {
+        return +str.replace(/\D/g,'');
+    }
+
     next.addEventListener('click', () =>{
-        if (offset == +widthWindow.slice(0, widthWindow.length - 2) * (slides.length - 1)){
+        if (offset == deleteNotDigits(widthWindow) * (slides.length - 1)){
             offset = 0;
         } else {
-            offset += +widthWindow.slice(0, widthWindow.length - 2);
+            offset += deleteNotDigits(widthWindow);
         }
 
         transformSlider(offset);
@@ -121,9 +125,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     prev.addEventListener('click', () =>{
         if (offset == 0){
-            offset = +widthWindow.slice(0, widthWindow.length - 2) * (slides.length - 1); 
+            offset = deleteNotDigits(widthWindow) * (slides.length - 1); 
         } else {
-            offset -= +widthWindow.slice(0, widthWindow.length - 2);
+            offset -= deleteNotDigits(widthWindow);
         }
 
         transformSlider(offset);
@@ -141,7 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
         dot.addEventListener('click', (e) =>{
             const slideTo = e.target.getAttribute('data-slide-to');
             slideIndex = slideTo;
-            offset = +widthWindow.slice(0, widthWindow.length - 2) * (slideTo - 1);
+            offset = deleteNotDigits(widthWindow) * (slideTo - 1);
             transformSlider(offset);
             dotsOpacityChanger(slideIndex);
             zeroChecker(slideIndex);
