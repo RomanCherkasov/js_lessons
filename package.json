@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "jshint": "^2.13.1"
+    "jshint": "^2.13.4",
+    "json-server": "^0.17.0"
   }
 }
