@@ -1,5 +1,4 @@
-function timer(){
-    const deadline = '2021-12-31';
+function timer(id, deadline){
     
     // получение оставшегося времени до дедлайна
     function getTimeRemaining(endtime){
@@ -52,7 +51,7 @@ function timer(){
         }
     }
 
-    setClock('.timer', deadline);
+    setClock(id, deadline);
 }
 
-module.exports = timer;
+export default timer;

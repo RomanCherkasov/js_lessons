@@ -1,31 +1,36 @@
-function modal() {
-    const modalWindow = document.querySelector('.modal'),
-        buttonForModalWindow = document.querySelectorAll('[data-modal]');
+function modalWindowHide(modalSelector) {
+    const modalWindowForHide = document.querySelector(modalSelector)
+    // как в уроке
+    modalWindowForHide.classList.add('hide');
+    modalWindowForHide.classList.remove('show');
+    // как сам придумал
+    // modalWindow.style.display = 'none';
+    document.body.style.overflow = '';
+}
 
-    function modalWindowHide(modalWindowForHide) {
-        // как в уроке
-        modalWindowForHide.classList.add('hide');
-        modalWindowForHide.classList.remove('show');
-        // как сам придумал
-        // modalWindow.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-
-    function modalWindowShow(modalWindowForShow) {
-        // как в уроке
-        modalWindow.classList.add('show');
-        modalWindow.classList.remove('hide');
-        // как сам придумал
-        // modalWindow.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+function modalWindowShow(modalSelector, modalTimerId) {
+    const modalWindow = document.querySelector(modalSelector)
+    // как в уроке
+    modalWindow.classList.add('show');
+    modalWindow.classList.remove('hide');
+    // как сам придумал
+    // modalWindow.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    console.log(modalTimerId)
+    if (modalTimerId){
         clearInterval(modalTimerId);
-        window.removeEventListener('scroll', scrollListenr);
     }
+}
+
+
+function modal(triggerSelector, modalSelector, modalTimerId) {
+    const modalWindow = document.querySelector(modalSelector),
+        buttonForModalWindow = document.querySelectorAll(triggerSelector);
 
     buttonForModalWindow.forEach((item) => {
-        item.addEventListener('click', () => {
-            modalWindowShow(modalWindow);
-        });
+        item.addEventListener('click', () => 
+            modalWindowShow(modalSelector, modalTimerId)
+        );
     });
 
     // buttonClose.addEventListener('click', () => {
@@ -35,22 +40,21 @@ function modal() {
 
     modalWindow.addEventListener('click', (event) => {
         if (event.target === modalWindow || event.target.getAttribute('data-close') == '') {
-            modalWindowHide(modalWindow);
+            modalWindowHide(modalSelector);
         }
     });
     document.addEventListener('keydown', (event) => {
         //  console.log(event);
         if (event.code == 'Escape' && modalWindow.classList.contains('show')) {
-            modalWindowHide(modalWindow);
+            modalWindowHide(modalSelector);
         }
     });
 
-    const modalTimerId = setTimeout(modalWindowShow, 3000);
     clearInterval(modalTimerId);
 
     function scrollListenr() {
         if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            modalWindowShow(modalWindow);
+            modalWindowShow(modalSelector, modalTimerId);
         }
     }
 
@@ -60,4 +64,6 @@ function modal() {
 
 }
 
-module.exports = modal;
+export default modal;
+export {modalWindowHide};
+export {modalWindowShow};
