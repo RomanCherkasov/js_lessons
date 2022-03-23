@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Slider
+  // Slider
     const slides = document.querySelectorAll('.offer__slide'),
           slider = document.querySelector('.offer__slider'),
           prev = document.querySelector('.offer__slider-prev'),

@@ -8,7 +8,7 @@ import calc from './modules/calc';
 import {modalWindowShow} from './modules/modal';
 
 window.addEventListener('DOMContentLoaded', () =>{
-    const allButtons = document.querySelectorAll('button')
+    const allButtons = document.querySelectorAll('button');
     allButtons.forEach(element => {
         element.addEventListener('submit', (e) => {
             e.preventDefault();
