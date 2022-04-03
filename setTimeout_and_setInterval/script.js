@@ -4,25 +4,40 @@ const btn = document.querySelector('.btn');
 const buttonCreate = document.createElement('button');
 let tId,
     i = 0;
+let pos = 0;
+const elem = document.querySelector('.box');
 
+// function myAnimation() {
+//     const elem = document.querySelector('.box');
+//     let pos = 0;
+
+//     const id = setInterval(frame, 10);
+//     function frame() {
+//         if (pos == 300){
+//             clearInterval(id);
+//         } else {
+//             pos++;
+//             elem.style.top = pos + 'px';
+//             elem.style.left = pos + 'px';
+//         }
+//     }
+// }
 function myAnimation() {
-    const elem = document.querySelector('.box');
-    let pos = 0;
-
-    const id = setInterval(frame, 10);
-    function frame() {
-        if (pos == 300){
-            clearInterval(id);
-        } else {
-            pos++;
-            elem.style.top = pos + 'px';
-            elem.style.left = pos + 'px';
-        }
+    pos++;
+    elem.style.top = pos + 'px';
+    elem.style.left = pos + 'px';
+    
+    if (pos < 300) {
+        requestAnimationFrame(myAnimation);
+    } else {
+        elem.style.top = 0;
+        elem.style.left = 0;
+        pos = 0;
+        // cancelAnimationFrame(animationID)
     }
 }
-
-
-btn.addEventListener('click', myAnimation);
+// let animationID = requestAnimationFrame(myAnimation);
+btn.addEventListener('click', () => requestAnimationFrame(myAnimation));
 
 // function logger(){
 //     if (i == 3) {clearInterval(tId);}
